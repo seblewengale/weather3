@@ -1,0 +1,63 @@
+html{height:100%;}
+h2,h3 {
+  text-align:  center;
+  text-decoration: underline;
+}
+@mixin mix {
+    font-family: comic sans ms;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+}
+p {
+  text-align:  center;
+  font-family: sans-serif;
+  color: blue;
+}
+.rain {
+  @extend %module;
+  @include transition(all 0.3s ease);
+  background: LightCyan;
+  &:hover {
+    background: DarkCyan;
+  }
+  &::before {
+    content: "";
+    display: block;
+  }
+  > h3 {
+    @include transform(rotate(90deg));
+    border-bottom: 1px solid white;
+    @extend %line-under;
+
+  }
+}
+.rain {
+	width: 100vw;
+	height: 100vh;
+	background-image: url(http://assets.adamrobinson.im/codepen/raindrop.svg);
+	background-size: 60px 60px;
+	animation: rain;
+	animation-duration: 0.3s;
+	animation-iteration-count:infinite;
+	animation-timing-function: linear;
+}
+
+@-webkit-keyframes rain {
+    from {background-position:0 0 ;}
+    to { background-position: -60px 60px}
+}
+
+@keyframes rain {
+    from {background-position:0 0 ;}
+    to { background-position: -60px 60px}
+}
+
+
+@function setStyle($map, $object, $style) {
+  @if map-has-key($map, $object) {
+    @return map-get(map-get($map, $object), $style);
+  }
+  @warn "The key ´#{$object} is not available in the map.";
+  @return null;
+}
